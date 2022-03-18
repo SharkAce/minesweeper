@@ -14,10 +14,9 @@ class World {
         }
         for (let i=0; i<options.bombQty; i++){
             let rnd = random(flatGrid)
-            flatGrid.splice(rnd,1)
-            bombPos.push({x: rnd % options.xLen, y: Math.floor(rnd/options.yLen)})
+            flatGrid.splice(flatGrid.indexOf(rnd),1)
+            bombPos.push({y: rnd % options.yLen, x: Math.floor(rnd/options.yLen)})
         }
-
         this.grid = []
         for (let x=0; x<options.xLen; x++){
             this.grid.push([])
