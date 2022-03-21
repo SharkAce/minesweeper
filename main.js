@@ -1,6 +1,6 @@
 const length = 1000
 const height = 750
-const tileSize = 1000/20
+const tileSize = 50
 
 new p5()
 
@@ -14,17 +14,16 @@ function setup(){
 }
 
 const world = new World({
-    xLen: 20,
-    yLen: 15,
-    bombQty: 60
+    xLen: Math.floor(length/tileSize),
+    yLen: Math.floor(height/tileSize),
+    bombQty: 4
 })
 
 world.createGrid(world.options)
 
 function draw(){
     background(245)
-    world.grid.forEach((row) => row.forEach((tile) => tile.render()));
-    world.checkForZero()
+    world.renderTiles()
 }
 
 
@@ -33,11 +32,11 @@ function mouseClicked(event){
     if (!world.failed){
         world.click(
             Math.floor(mouseX/tileSize),
-            Math.floor(mouseY/tileSize)
+            Math.floor(mouseY/tileSize) 
         )
     }
 }
-//right click
+//right click   
 document.oncontextmenu = () => {
     if (!world.failed){
         world.flag(

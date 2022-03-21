@@ -6,9 +6,6 @@ class Tile{
         this.flagged = false;
         this.clicked = false;
     }
-    flag(){
-        this.flagged = true;
-    }
     render(){
         this.clicked ? fill(255) : fill(220) 
         square(this.pos.x*tileSize+1, this.pos.y*tileSize+1,tileSize-2)
@@ -43,12 +40,12 @@ class Tile{
                 if (this.flagged){
                     strokeWeight(4)
                     line(
-                        this.pos.x*tileSize+tileSize*0.25,  this.pos.y*tileSize+tileSize*0.25, 
-                        this.pos.x*tileSize+tileSize*0.75,  this.pos.y*tileSize+tileSize*0.75
+                        this.pos.x*tileSize+tileSize*0.30,  this.pos.y*tileSize+tileSize*0.30, 
+                        this.pos.x*tileSize+tileSize*0.70,  this.pos.y*tileSize+tileSize*0.70
                     )
                     line(
-                        this.pos.x*tileSize+tileSize*0.75,  this.pos.y*tileSize+tileSize*0.25, 
-                        this.pos.x*tileSize+tileSize*0.25,  this.pos.y*tileSize+tileSize*0.75
+                        this.pos.x*tileSize+tileSize*0.70,  this.pos.y*tileSize+tileSize*0.30, 
+                        this.pos.x*tileSize+tileSize*0.30,  this.pos.y*tileSize+tileSize*0.70
                     )
                     strokeWeight(1)
                 }
