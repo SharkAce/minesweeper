@@ -20,7 +20,7 @@ class Tile{
                 case 4 : fill('darkblue'); break;
                 case 5 : fill('brown'); break;
                 case 6 : fill('turquoise'); break;
-                default: fill(100)
+                default: fill('purple')
             }
             text(this.neighbourBomb,this.pos.x*tileSize+tileSize/2,this.pos.y*tileSize+tileSize/1.5)
         }
