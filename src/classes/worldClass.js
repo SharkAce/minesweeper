@@ -2,13 +2,13 @@ class World {
     constructor (options){
         this.options = options;
         this.failed = false
-        this.grid = []
+        this.createGrid(options)
     }
 
     forEachTile(callback){
         for (let x=0; x<this.options.xLen; x++){
             for (let y=0; y<this.options.yLen; y++){
-                callback(x,y)
+                callback(this.grid[x][y])
             }
         }
     }
@@ -37,18 +37,17 @@ class World {
             }
         }
 
-        this.forEachTile( (x,y) => 
-            this.grid[x][y].neighbourBomb = this.findNeighbour(x,y,'bomb')
+        this.forEachTile( (tile) => 
+            tile.neighbourBomb = this.findNeighbour(tile.pos.x,tile.pos.y,'bomb')
         )
     }
 
     findNeighbour (x,y,type){
-        let range = 1
-        let n = 0, fi=x+range, fj=y+range
-    
-        for (x-=range; x<=fi; x++){
-            y=fj-range
-            for (y-=range; y<=fj; y++){
+        let n = 0, fx=x+1, fy=y+1
+
+        for (x-=1; x<=fx; x++){
+            y=fy-1
+            for (y-=1; y<=fy; y++){
                 try {
                     switch(type){
                         case 'bomb' : 
@@ -68,17 +67,17 @@ class World {
         return n
     }
 
-    checkForZero(x,y){
+    checkForZero(){
         let stop = false
         while(!stop){
             stop = true
-            this.forEachTile( (x,y) => {
+            this.forEachTile( (tile) => {
                 if (
-                    !this.grid[x][y].clicked && (this.findNeighbour(x,y,'zero') >= 1 ||
-                    (this.findNeighbour(x,y,'clicked') >= 1 && this.grid[x][y].neighbourBomb == 0))
+                    !tile.clicked && (this.findNeighbour(tile.pos.x,tile.pos.y,'zero') >= 1 ||
+                    (this.findNeighbour(tile.pos.x,tile.pos.y,'clicked') >= 1 && tile.neighbourBomb == 0))
                 ) {
-                    this.grid[x][y].clicked = true
-                    this.grid[x][y].flagged = false
+                    tile.clicked = true
+                    tile.flagged = false
                     stop = false
                 }
             })
@@ -93,7 +92,7 @@ class World {
         }
         else if (!this.grid[x][y].flagged){
             this.grid[x][y].clicked = true
-            this.checkForZero(x,y)
+            this.checkForZero()
         }
     }
 
@@ -107,6 +106,6 @@ class World {
         }
     }
     renderTiles(){
-        this.forEachTile( (x,y) => this.grid[x][y].render())
+        this.forEachTile( (tile) => tile.render())
     }
 }
